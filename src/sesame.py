@@ -43,7 +43,7 @@ def sesame():
     - In all other cases, the BROWSER is used.
     '''
     path_or_url = sys.argv[1]
-    maybe_path = Path(path_or_url)
+    maybe_path = Path(path_or_url).expanduser()
     if maybe_path.is_dir():
         app = FILEMANAGER
     elif maybe_path.is_file():
