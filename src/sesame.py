@@ -53,7 +53,7 @@ def sesame():
             app = EDITOR
     else:
         app = BROWSER
-    command = [app] + OPTIONS[app] + [path_or_url]
+    command = [app] + OPTIONS[app] + [maybe_path]
     subprocess.run(command)
 
 if __name__ == '__main__':
