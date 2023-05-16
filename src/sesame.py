@@ -2,6 +2,7 @@
 
 from collections import defaultdict
 from pathlib import Path
+import re
 import subprocess
 import sys
 
@@ -27,9 +28,9 @@ EXT_TO_APP = {
     for ext in exts}
 
 OPTIONS = defaultdict(list)
-OPTIONS[BROWSER] = ['-new-window']
-OPTIONS[EDITOR] = ['-n']        # new window
-OPTIONS[FILEMANAGER] = ['-n']   # new window
+OPTIONS[BROWSER] = [] # ['-new-window']
+OPTIONS[EDITOR] = [] # ['-n']        # new window
+OPTIONS[FILEMANAGER] = [] # ['-n']   # new window
 
 def sesame():
     '''
@@ -43,6 +44,15 @@ def sesame():
     - In all other cases, the BROWSER is used.
     '''
     path_or_url = sys.argv[1]
+    try:
+        browser = sys.argv[2]
+    except IndexError:
+        browser = BROWSER
+    # extract text between curly braces, if present
+    # https://docs.python.org/3/library/re.html
+    texts_between_braces = re.findall(r"\(([^()]+)\)", path_or_url)
+    if texts_between_braces:
+        path_or_url = texts_between_braces[-1]
     maybe_path = Path(path_or_url).expanduser()
     if maybe_path.is_dir():
         app = FILEMANAGER
@@ -52,7 +62,7 @@ def sesame():
         except KeyError:
             app = EDITOR
     else:
-        app = BROWSER
+        app = browser
     command = [app] + OPTIONS[app] + [maybe_path]
     subprocess.run(command)
 
