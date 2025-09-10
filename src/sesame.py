@@ -17,9 +17,9 @@ APP_TO_EXT = {
     'loimpress': ['.ppt', '.pptx'],
     'lowriter': ['.doc', '.docx', '.odf'],
     'lyx': ['.lyx'],
-    'ristretto': ['.jpg', '.jpeg', '.png', '.svg', '.tif', '.tiff'],
+    'eog': ['.jpg', '.jpeg', '.png', '.svg', '.tif', '.tiff'],
 #    'vlc': ['.mp3', '.mp4'],   # won't work when called from i3wm
-    'yEd': ['.graphml'],
+    'yed': ['.graphml'],
 }
 
 EXT_TO_APP = {
